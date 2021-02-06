@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+const {getProducts, getProduct, getCompanies, getCompany, updateProduct} = require("./handlers");
+
 const PORT = 4000;
 
 express()
@@ -26,5 +28,13 @@ express()
 
   // REST endpoints?
   .get('/bacon', (req, res) => res.status(200).json('🥓'))
+
+  //get all products from DataBase
+
+  .get('/products', getProducts)
+  .get('/products/:productId', getProduct)
+  .get('/companies', getCompanies)
+  .get('/companies/:companyId', getCompany)
+  .patch('/products/:productId', updateProduct)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
