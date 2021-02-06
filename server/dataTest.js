@@ -6,6 +6,7 @@ const companies = JSON.parse(fs.readFileSync('server/data/companies.json'));
 const updatedArr = [];
 
 companies.forEach((item) => {
+  console.log('test')
   updatedArr.push({
     name: item.name,
     url: item.url,
