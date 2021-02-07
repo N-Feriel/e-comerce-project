@@ -2,14 +2,33 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
   const [bacon, setBacon] = useState(null);
+  const[items, setItems] = useState(null)
 
   useEffect(() => {
-    fetch('/bacon')
+
+      fetch('/products')
       .then(res => res.json())
-      .then(data => setBacon(data));
+      .then(data => setItems(data.data));
+
   }, []);
 
-  return <div>{bacon ? bacon : `...where's my stuff?...`}</div>;
+  console.log(items)
+
+
+  return (
+    <>
+    { items && 
+    <>
+    {items.map(item => 
+    <div>
+    {item.name}
+    <img src={item.imageSrc} />
+  </div>)}
+    </>
+
+    }
+    </>
+  )
 }
 
 export default App;
