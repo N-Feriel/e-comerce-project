@@ -18,7 +18,6 @@ switch (action.type) {
             status: 'idle',
 
             Companies: {
-                ...state.companies,
                 data: action.data
             }
             

@@ -4,6 +4,7 @@ const initialState = {
     error: null,
 };
 
+
 export default function productReducer(state = initialState, action) {
 switch (action.type) {
     case "REQUEST_PRODUCTS_DATA": {
@@ -16,11 +17,12 @@ switch (action.type) {
         return {
             ...state,
             status: 'idle',
+            products: [
+                ...action.data
 
-            products: {
-                ...state.products,
-                data: action.data
-            }
+            ]
+            
+            
             
         }
     }
@@ -29,6 +31,11 @@ switch (action.type) {
         return{
             ...state,
             status: 'error',
+            error:{
+                ...state.error,
+                error: action.error.message
+            }
+        
         }
     }
     default:{
