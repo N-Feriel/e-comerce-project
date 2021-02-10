@@ -161,7 +161,6 @@ const Cart = () => {
                     </Button>
                     
                     <Button style={{backgroundColor: `${themeVars.lightBlack}`}}
-                        onClick={handlePay}
                     
                         >
                         PAY

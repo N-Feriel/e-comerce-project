@@ -110,5 +110,4 @@ const H2 = styled.h2`
     color: ${themeVars.YellowColor};
 `
 
-
 export default Header;
