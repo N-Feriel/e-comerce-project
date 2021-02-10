@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route } from "react-router-dom";
 import GlobalStyles from '../GlobalStyles';
-import Company from './Company';
+// import Company from './Company';
 import Header from './Header';
 import HomePage from './HomePage';
 import Cart from "./Cart";
@@ -16,21 +16,21 @@ import {requestProductstData,
 
 function App() {
   
-  const dispactch = useDispatch();
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
 
-      dispactch(requestProductstData())
+      dispatch(requestProductstData())
 
       fetch('/products')
       .then(res => res.json())
       .then((json) => {
-        dispactch(receiveProductstData(json.data))
+        dispatch(receiveProductstData(json.data))
       })
       .catch((error) =>{
         console.log('error in request', error)
-        dispactch(receiveProductsDataError(error))
+        dispatch(receiveProductsDataError(error))
       })
   }, []);
 
@@ -44,12 +44,11 @@ function App() {
           <HomePage />
         </Route>
         <Route exact path="/products" >
-          <SideBar />
           <Products />
         </Route>
         <Route exact path="/companies" >
           <SideBar />
-          <Company />
+          {/* <Company /> */}
         </Route>
 
         <Route exact path="/cart" >

@@ -1,15 +1,17 @@
-import {produce} from 'immer';
-
-const initialeState = {};
+import {produce} from'immer';
 
 
-export default function cartReducer (state = initialeState, action){
+const initialState = {};
 
-    console.log(action)
+export default function cartReducer(state = initialState, action) {
 
-    switch(action.type){
-        case "ADD_ITEM_TO_CART":{
-            return {
+    console.log('action', action)
+
+    switch (action.type) {
+
+        case 'ADD_ITEM_TO_CART':{
+
+            return{
                 ...state,
                 [action.item._id]:{
                     ...action.item,
@@ -18,22 +20,25 @@ export default function cartReducer (state = initialeState, action){
             }
         }
 
-        case " REMOVE_ITEM_TO_CART":{
+        case 'REMOVE_ITEM_TO_CART':{
             return produce(state, (draftState) =>{
-                delete draftState[action.item.id]
+                delete draftState[action.item._id]
             })
         }
-        case " UPDATE_QUANTITY ":{
-            return produce(state, (draftState) =>{
-                const {item, key, value} = action;
-                
-                draftState[item.id][key]= value;
-            })
-        }
-        case 'CLEAR_CART':{
+
+        case 'UPDATE_QUANTITY':{
 
             return produce(state, (draftState) =>{
-                return draftState = initialeState
+                const {item, key, value} = action;
+                draftState[item._id][key]= value;
+            })
+
+        }
+
+        case 'CLEAR_CART':{
+            
+            return produce(state, (draftState) =>{
+                return draftState = initialState
             })
 
         }
@@ -41,10 +46,8 @@ export default function cartReducer (state = initialeState, action){
 
         default:
             return state;
-
-
     }
-
 }
 
 
+export const getCartItemArray = state => Object.values(state);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { themeVars } from "../GlobalStyles";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 import {HiOutlineUser} from 'react-icons/hi';
@@ -17,8 +17,6 @@ const Header = () => {
 
     let itemsInTheCart = cart ?  Object.values(cart).length : 0
 
-    console.log(itemsInTheCart)
-
 
     const handleCart = () =>{
         history.push("/cart")
@@ -27,8 +25,20 @@ const Header = () => {
     return (
         <NavBar>
             <Ul>
-                <Li>Home</Li>
-                <Li>Shop</Li>
+                <Li>
+                    <Link className="text-link" to='/'>
+                        Home
+                    </Link>
+                </Li>
+                <Li style={{position: 'relative'}}> 
+                    <Link className="text-link" to='/products'>
+                        Shop
+                    </Link>
+                    <ul className='sub_categorie'>
+                        <li>categies</li>
+                        <li>Body Part</li>
+                    </ul>
+                </Li>
             </Ul>
 
             <H2>Wa<MdWatch />ch</H2>
@@ -58,10 +68,47 @@ const Li = styled.li`
     font-size: 20px;
     margin: 20px;
     align-self: baseline;
+
+
+    & .text-link{
+        color: ${themeVars.lightColor};
+        text-decoration: none;
+    }
+
+    & .text-link:hover , .text-link:active{
+        color: ${themeVars.YellowColor};
+        text-decoration: none;
+    
+    }
+
+    & .sub_categorie{
+        display: none;
+        position: absolute;
+        background: ${themeVars.lightColor};
+        color: ${themeVars.darkGreen};
+    }
+
+    &:hover .sub_categorie{
+        display: flex;
+        flex-direction: column;
+
+
+        & li{
+            width: 150px;
+            padding: 20px;
+        }
+
+        & li:hover{
+            background: ${themeVars.YellowColor};
+            
+        }
+
+    }
 `
 
 const H2 = styled.h2`
     color: ${themeVars.YellowColor};
 `
+
 
 export default Header;

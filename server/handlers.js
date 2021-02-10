@@ -75,13 +75,27 @@ const updateProduct = (req, res) => {
             message: "can't update the product with given ID "
         })
     }else{
-        res.status(200).json({
-            status: 200,
-            data: {
-                ...productName,
-                numInStock: req.body.numInStock
-            }
-        })
+        if(req.body.quantity > productName.numInStock){
+            res.status(400).json({
+                status: 400,
+                message: "Sorry we are out of stock"
+            })
+
+        } else {
+
+            const productIndex = items.findIndex((obj => obj._id == idProduct))
+
+            items[productIndex].numInStock = items[productIndex].numInStock - req.body.quantity
+
+
+
+            res.status(200).json({
+                status: 200,
+                data: items
+                    
+            })
+        }
+        
     
     }
 }

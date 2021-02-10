@@ -19,11 +19,7 @@ switch (action.type) {
             status: 'idle',
             products: [
                 ...action.data
-
             ]
-            
-            
-            
         }
     }
 
