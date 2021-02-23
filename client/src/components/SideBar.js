@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {useSelector} from "react-redux";
 import { themeVars } from "../GlobalStyles";
 
+import { MdSubject } from 'react-icons/md';
+import {device} from '../device';
+
 const SideBar = ({Categories, handleCategorySelect, selectedCategory}) => {
 
     const {status, products} = useSelector((state) => state.product)
@@ -39,6 +42,8 @@ const SideBar = ({Categories, handleCategorySelect, selectedCategory}) => {
 
                 </ul> */}
 
+                <MdSubject size='40px' className='IconClass'/>
+
                 <ul className='sub-category'>
                     {allCategories.map(category =>(
                         <li key={category} 
@@ -58,31 +63,56 @@ const SideBar = ({Categories, handleCategorySelect, selectedCategory}) => {
 
 const Wrapper = styled.div`
     display: flex;
-    flex-direction: column;
-    background: ${themeVars.darkGreen};
+    margin-right: auto;
 
+    & ul{
+        display: flex;
+    }
 
 
     & li{
-        background: ${themeVars.darkGreen};
-        color: ${themeVars.lightColor};
-        border-color: ${themeVars.lightColor};
+        background: ${themeVars.green};
+        color: ${themeVars.darkBlue};
+        border-radius: 4px;
+        border: ${themeVars.darkBlue} 2px solid;
         text-align: center;
-        padding: 20px;
-        width: 250px;
-        
-
+        padding: 10px 20px;
+        margin: 5px;;
 
     }
     & li:hover{
-        background: ${themeVars.lightColor};
-        color: ${themeVars.darkGreen};
+        background: ${themeVars.darkBlue};
+        color: ${themeVars.lavender};
     }
     .active{
-        background: ${themeVars.lightColor};
-    color: ${themeVars.darkGreen};
+        background: ${themeVars.darkBlue};
+        color: ${themeVars.lavender};
     }
 
+
+    @media ${device.mobileS} and (max-width: 768px) { 
+
+        & .IconClass:hover ~.sub-category,
+        .sub-category:hover{
+            display: block;
+        }
+
+        & .sub-category{
+            display: none;
+        }
+
+        & .IconClass:hover{
+            color: ${themeVars.middleRedColor}
+        }
+
+    }
+
+    @media ${device.tablet} {
+        & .IconClass{
+            display: none;
+        }
+    
+    }
 
 `
 

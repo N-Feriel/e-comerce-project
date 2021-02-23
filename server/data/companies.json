@@ -3,442 +3,516 @@
     "name": "Barska",
     "url": "http://www.barska.com/",
     "country": "United States",
+    "imageSrc":"https://www.barska.com/Themes/Barska/Content/images/logo.png",
     "_id": 19962
   },
   {
     "name": "Belkin",
     "url": "http://www.belkin.com/",
     "country": "United States",
+    "imageSrc":"https://www.belkin.com/medias/belkin-logo.svg?context=bWFzdGVyfGltYWdlc3wzNDkxfGltYWdlL3N2Zyt4bWx8aW1hZ2VzL2gwOC9oZjgvODg5NzI5NzAyMzAwNi5zdmd8NjA2MWMyOThhNTYxNzZjNDhiZTU3OTRhZjFiNzM0OTI4YmZjNGNkNjAzYzBlZDEwMmFkYjIyYzA2MmEyZWEyOQ",
     "_id": 16384
   },
   {
     "name": "Bowflex",
+    "imageSrc":"https://www.bowflex.ca/on/demandware.static/Sites-Bowflex_CA-Site/-/default/dw4fa941b5/images/bowflex-logo.svg",
     "url": "http://www.bowflex.com/",
     "country": "United States",
     "_id": 11385
   },
   {
     "name": "Casio",
+    "imageSrc":"https://casiocdn.com/casio-v2/resource/world/assets/logos/casio-logo.svg",
     "url": "http://www.casio.com",
     "country": "Japan",
     "_id": 13334
   },
   {
     "name": "Coleman",
+    "imageSrc":"https://www.coleman.com/on/demandware.static/Sites-coleman-Site/-/default/dw9731adda/images/brand-logo.png",
     "url": "http://www.coleman.com/",
     "country": "United States",
     "_id": 18159
   },
   {
     "name": "Ekho",
+    "imageSrc":"https://static.ekho.us/skin/frontend/enterprise/ekho/images/logo.png",
     "url": "http://www.ekho.us/",
     "country": "United States",
     "_id": 17748
   },
   {
     "name": "Fitbit",
+    "imageSrc":"https://www.fitbit.com/global/content/dam/fitbit/global/product-logos/fitbit-new-logo-header.svg",
     "url": "http://www.fitbit.com/",
     "country": "United States",
     "_id": 10759
   },
   {
     "name": "Mota",
+    "imageSrc":"",
     "url": "https://www.mota.com/",
     "country": "United States",
     "_id": 19787
   },
   {
     "name": "Garmin",
+    "imageSrc":"",
     "url": "http://www.garmin.com/",
     "country": "United States",
     "_id": 10713
   },
   {
     "name": "Golf Buddy",
+    "imageSrc":"https://en.golfbuddy.com/Common/images/comm/bi_golfbuddy.png",
     "url": "http://www.golfbuddyglobal.com/",
     "country": "United States",
     "_id": 16478
   },
   {
     "name": "Jawbone",
+    "imageSrc":"https://static1.squarespace.com/static/5c86c2f47eb88c1bb558b38e/t/5c86d2c4ec212d363eafaf72/1552339654443/jawbone_logo_transparent.png?format=1500w",
     "url": "https://www.jawbone.com/",
     "country": "United States",
     "_id": 18834
   },
   {
     "name": "Lifetrak",
+    "imageSrc":"",
     "url": "http://lifetrakusa.com/",
     "country": "United States",
     "_id": 13305
   },
   {
     "name": "Magellan",
+    "imageSrc":"https://www.magellangps.com/skin/frontend/astralweb/magellan/images/logo.png",
     "url": "http://www.magellangps.com/",
     "country": "Taiwan",
     "_id": 16475
   },
   {
     "name": "Martian",
+    "imageSrc":"https://m.media-amazon.com/images/S/aplus-media/mg/a2d3e076-2386-4b53-8b70-f4727e1048de._SR970,300_.jpg",
     "url": "http://www.martianwatches.com",
     "country": "United States",
     "_id": 18112
   },
   {
     "name": "Mio",
-    "url": "http://www.mioglobal.com/",
+    "imageSrc":"https://cdn.shopify.com/s/files/1/0254/1381/2308/files/logo_3x_66e1483e-038b-4dbd-b685-3faf5e7618ae_80x@2x.png?v=1561558248",
+    "url": "https://mio-labs.com/",
     "country": "Canada",
     "_id": 17422
   },
   {
     "name": "Misfit",
+    "imageSrc":"",
     "url": "http://misfit.com/",
     "country": "United States",
     "_id": 11932
   },
   {
     "name": "Suunto",
+    "imageSrc":"",
     "url": "http://www.suunto.com/",
     "country": "Finland",
     "_id": 14902
   },
   {
     "name": "Polar",
+    "imageSrc":"",
     "url": "http://www.polar.com/",
     "country": "United States",
     "_id": 11837
   },
   {
     "name": "Pov",
+    "imageSrc":"",
     "url": "https://vio-pov.com/",
     "country": "United States",
     "_id": 19080
   },
   {
     "name": "Samsung",
+    "imageSrc":"",
     "url": "http://www.samsung.com/",
     "country": "South Korea",
     "_id": 18432
   },
   {
     "name": "Scosche",
+    "imageSrc":"",
     "url": "http://www.scosche.com/",
     "country": "United States",
     "_id": 18287
   },
   {
     "name": "Smarthealth",
+    "imageSrc":"",
     "url": "http://smarthealthusa.com/",
     "country": "United States",
     "_id": 14897
   },
   {
     "name": "Sportline",
+    "imageSrc":"",
     "url": "http://www.sportline.com/",
     "country": "United States",
     "_id": 12911
   },
   {
     "name": "Tomtom",
+    "imageSrc":"",
     "url": "http://www.tomtom.com/",
     "country": "Netherlands",
     "_id": 18324
   },
   {
     "name": "Xtreme Cables",
+    "imageSrc":"",
     "url": "http://www.xtremecables.net/",
     "country": "United States",
     "_id": 16194
   },
   {
     "name": "Yoo",
+    "imageSrc":"",
     "url": "http://www.yoochallenge.com/",
     "country": "United States",
     "_id": 11008
   },
   {
     "name": "Talk Trac",
+    "imageSrc":"",
     "url": "http://www.talktrac.com/",
     "country": "United States",
     "_id": 13456
   },
   {
     "name": "180s",
+    "imageSrc":"",
     "url": "http://www.180s.com/",
     "country": "United States",
     "_id": 14282
   },
   {
     "name": "Ablenet",
+    "imageSrc":"",
     "url": "http://www.ablenetinc.com/",
     "country": "United States",
     "_id": 18296
   },
   {
     "name": "Accusplit",
+    "imageSrc":"",
     "url": "http://www.accusplit.com/",
     "country": "United States",
     "_id": 16804
   },
   {
     "name": "Adafruit Industries",
+    "imageSrc":"",
     "url": "http://www.adafruit.com/",
     "country": "United States",
     "_id": 11455
   },
   {
     "name": "Nike",
+    "imageSrc":"",
     "url": "http://www.nike.com/",
     "country": "United States",
     "_id": 11939
   },
   {
     "name": "Archos",
+    "imageSrc":"",
     "url": "http://www.archos.com/us/",
     "country": "France",
     "_id": 16530
   },
   {
     "name": "Cogito",
+    "imageSrc":"",
     "url": "http://cogitowatch.com/",
     "country": "China",
     "_id": 14939
   },
   {
     "name": "Dorcy",
+    "imageSrc":"",
     "url": "http://www.dorcy.com/",
     "country": "United States",
     "_id": 17754
   },
   {
     "name": "Ematic",
+    "imageSrc":"",
     "url": "http://www.ematic.us/",
     "country": "United States",
     "_id": 17945
   },
   {
     "name": "Fabrication Enterprises",
+    "imageSrc":"",
     "url": "http://www.fab-ent.com/",
     "country": "United States",
     "_id": 17876
   },
   {
     "name": "Freehand",
+    "imageSrc":"",
     "url": "http://www.freehands.com/",
     "country": "United States",
     "_id": 11864
   },
   {
     "name": "Gerbing",
+    "imageSrc":"",
     "url": "http://gerbing.com/",
     "country": "United States",
     "_id": 13220
   },
   {
     "name": "Gofit",
+    "imageSrc":"",
     "url": "http://www.gofit.net/",
     "country": "United States",
     "_id": 17227
   },
   {
     "name": "Hoodiebuddie",
+    "imageSrc":"",
     "url": "http://www.hoodiebuddie.com/",
     "country": "United States",
     "_id": 11194
   },
   {
     "name": "Healthsmart",
+    "imageSrc":"",
     "url": "http://www.healthsmart.com/",
     "country": "United States",
     "_id": 15643
   },
   {
     "name": "High Tech Pet",
+    "imageSrc":"",
     "url": "http://www.hitecpet.com/",
     "country": "United States",
     "_id": 14834
   },
   {
     "name": "Geopalz",
+    "imageSrc":"",
     "url": "http://geopalz.com/",
     "country": "United States",
     "_id": 13411
   },
   {
     "name": "Ifit",
+    "imageSrc":"",
     "url": "https://www.ifit.com/",
     "country": "Taiwan",
     "_id": 11979
   },
   {
     "name": "Ik Multimedia",
+    "imageSrc":"",
     "url": "http://www.ikmultimedia.com/",
     "country": "Italy",
     "_id": 12143
   },
   {
     "name": "Impact Sports Technologies",
+    "imageSrc":"",
     "url": "http://www.impactsports.com/",
     "country": "United States",
     "_id": 12546
   },
   {
     "name": "Insten",
+    "imageSrc":"",
     "url": "http://insten.com/",
     "country": "United States",
     "_id": 11178
   },
   {
     "name": "Ion",
+    "imageSrc":"",
     "url": "http://usa.ioncamera.com/",
     "country": "United States",
     "_id": 16000
   },
   {
     "name": "Iriveron",
+    "imageSrc":"",
     "url": "http://www.iriverinc.com/",
     "country": "United States",
     "_id": 16308
   },
   {
     "name": "Lg",
+    "imageSrc":"",
     "url": "http://www.lg.com",
     "country": "South Korea",
     "_id": 18732
   },
   {
     "name": "Liquid Image",
+    "imageSrc":"",
     "url": "http://www.liquidimageco.com/",
     "country": "United States",
     "_id": 12760
   },
   {
     "name": "Ourcaste",
+    "imageSrc":"",
     "url": "http://ourcaste.com/",
     "country": "United States",
     "_id": 14626
   },
   {
     "name": "Meta",
+    "imageSrc":"",
     "url": "http://meta.watch/",
     "country": "Finland",
     "_id": 10175
   },
   {
     "name": "Midland",
+    "imageSrc":"",
     "url": "https://midlandusa.com",
     "country": "United States",
     "_id": 17316
   },
   {
     "name": "Monoprice",
+    "imageSrc":"",
     "url": "http://www.monoprice.com/",
     "country": "United States",
     "_id": 16459
   },
   {
     "name": "Motorola",
+    "imageSrc":"",
     "url": "http://www.motorola.com",
     "country": "United States",
     "_id": 16542
   },
   {
     "name": "Omron",
+    "imageSrc":"",
     "url": "http://www.omron.com/",
     "country": "Japan",
     "_id": 14946
   },
   {
     "name": "Onanoff",
+    "imageSrc":"",
     "url": "http://www.onanoff.com/",
     "country": "United States",
     "_id": 19103
   },
   {
     "name": "Papago",
+    "imageSrc":"",
     "url": "http://us.papagoinc.com/",
     "country": "Taiwan",
     "_id": 14604
   },
   {
     "name": "Pebble",
+    "imageSrc":"",
     "url": "http://www.getpebble.com",
     "country": "United States",
     "_id": 14488
   },
   {
     "name": "Pyle",
+    "imageSrc":"",
     "url": "http://www.pyleaudio.com/",
     "country": "United States",
     "_id": 15416
   },
   {
     "name": "Runtastic",
+    "imageSrc":"",
     "url": "https://www.runtastic.com/",
     "country": "Austria",
     "_id": 19685
   },
   {
     "name": "Micgrand",
+    "imageSrc":"",
     "url": "http://www.micgrand.com/",
     "country": "China",
     "_id": 15299
   },
   {
     "name": "Skechers",
+    "imageSrc":"",
     "url": "http://www.skechers.com/",
     "country": "United States",
     "_id": 15211
   },
   {
     "name": "Sony",
+    "imageSrc":"",
     "url": "http://www.sony.com/",
     "country": "Japan",
     "_id": 12407
   },
   {
     "name": "Sparkfun Electronics",
+    "imageSrc":"",
     "url": "https://www.sparkfun.com/",
     "country": "United States",
     "_id": 12891
   },
   {
     "name": "Striiv",
+    "imageSrc":"",
     "url": "http://www.striiv.com/",
     "country": "United States",
     "_id": 16710
   },
   {
     "name": "Trionic",
+    "imageSrc":"",
     "url": "http://www.trionic.us/",
     "country": "United States",
     "_id": 13474
   },
   {
     "name": "Vuzix",
+    "imageSrc":"",
     "url": "http://www.vuzix.com/",
     "country": "United States",
     "_id": 11855
   },
   {
     "name": "Whistle",
+    "imageSrc":"",
     "url": "http://www.whistle.com/",
     "country": "United States",
     "_id": 14639
   },
   {
     "name": "Withings",
+    "imageSrc":"",
     "url": "http://www.withings.com/",
     "country": "France",
     "_id": 17728
   },
   {
     "name": "X-Doria",
+    "imageSrc":"",
     "url": "http://shop.x-doria.com/",
     "country": "United States",
     "_id": 16102
   },
   {
     "name": "Yes",
+    "imageSrc":"",
     "url": "http://www.yeswatch.com/",
     "country": "United States",
     "_id": 14609

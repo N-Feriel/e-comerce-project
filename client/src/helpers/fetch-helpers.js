@@ -15,3 +15,4 @@ export function fetchProductsUpdate(item, quantity){
     }).then(res => res.json())
 
 }
+

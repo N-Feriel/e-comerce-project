@@ -1,5 +1,10 @@
+
+const { padEnd } = require("lodash");
+const { token } = require("morgan");
 const companies = require("./data/companies.json");
 const items = require("./data/items")
+require("dotenv").config()
+
 
 
 const getProducts = (req, res) =>{
@@ -100,6 +105,84 @@ const updateProduct = (req, res) => {
     }
 }
 
+//Add part Stripe payment part
+
+const keySecret = process.env.SECRET_KEY;
+
+const stripe = require("stripe")("sk_test_51IKV6pB7B1Sagu8UqM2FexpgXhGjtdQOFvjgyAwLkFL2iSyrPHH5fWR2uFsyoIMmZ4YRgSOxQwOTk0BufSCN7Wd200S9SJygyp");
+
+
+const calculateOrderAmount = items => {
+      // Replace this constant with a calculation of the order's amount
+      // Calculate the order total on the server to prevent
+      // people from directly manipulating the amount on the client
+        return 1400;
+    };
+
+const createPayment = async(req, res) => {
+
+    // const uuid  = require('uuid/v4')
+    // const idempontencyKey = uuid();
+
+    
+    
+    try{
+
+        let intent; 
+
+        if (req.body.payment_method_id) {
+            intent = await stripe.paymentIntents.create({
+                // amount: calculateOrderAmount(items),
+                payment_method: request.body.payment_method_id,
+                amount: 1099,
+                currency: 'cad',
+                confirmation_method: 'manual',
+                confirm: true
+            });
+        }else if (request.body.payment_intent_id){
+            intent = await stripe.paymentIntents.confirm(
+                request.body.payment_intent_id
+            );
+            
+
+        }
+            // Send the response to the client
+            response.send(generateResponse(intent));
+        }catch(error){
+            return response.send({ error: error.message });
+
+        }
+
+        const generateResponse = (intent) => {
+
+            if (
+                intent.status === 'requires_action' &&
+                intent.next_action.type === 'use_stripe_sdk'
+            ) {
+                // Tell the client to handle the action
+                return {
+                    requires_action: true,
+                    payment_intent_client_secret: intent.client_secret
+                    };
+                } else if (intent.status === 'succeeded') {
+                    // The payment didn’t need any additional actions and completed!
+                    // Handle post-payment fulfillment
+                    return {
+                    success: true
+                    };
+                } else {
+                    // Invalid status
+                    return {
+                    error: 'Invalid PaymentIntent status'
+                    }
+                }
+        }
+    
+}
+
+    
+
+
 
 
 module.exports ={
@@ -107,5 +190,6 @@ module.exports ={
     getProduct,
     getCompanies,
     getCompany, 
-    updateProduct
+    updateProduct,
+    createPayment
 }

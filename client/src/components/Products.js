@@ -6,11 +6,12 @@ import ProductItem from './ProductItem';
 import {paginate} from "../helpers/pagination";
 import { themeVars } from "../GlobalStyles";
 import SideBar from './SideBar';
+import {device} from '../device';
 
 const Products = () => {
 
     const {status, products} = useSelector((state) => state.product)
-    const [pageSize, setPageSize]= useState(20);
+    const [pageSize, setPageSize]= useState(18);
     const [currentPage, setCurrentPage] = useState(1);
 
     let BodyLocationCategorie = [];
@@ -57,32 +58,37 @@ const Products = () => {
         
         return(
             <Wrapper>
+            
+                <h2>Our Products</h2>
 
-                <SideBar Categories ={Categories}
+                <SideBar 
+                        Categories ={Categories}
                         handleCategorySelect={handleCategorySelect}
                         selectedCategory={selectedCategory}
                 />
-                
-                <Container>
+            
 
-                    <h2>Our Products</h2>
-                    <SubContainer>
-                        {productsPaginate.map(item =>
-                            <ProductItem 
-                            key={item._id} 
-                            item={item} 
-                            /> 
-                            )}
+                    <div className= 'containerScoll'>
+                        <div className='subContainer'>
+                            {productsPaginate.map(item =>
+                                <ProductItem 
+                                    className='prod'
+                                    key={item._id} 
+                                    item={item} 
+                                /> 
+                                )}
 
-                    </SubContainer>
+                        </div>
+                    </div>
 
-                    <Pagination 
+
+                    <Pagination className='paginate'
                             itemsCount= {filteredProducts.length} 
                             currentPage={currentPage}
                             pageSize ={pageSize}
-                            
                             onPageChange= {handlePageChange}/>
-                </Container>
+            
+                
 
             </Wrapper>
         )
@@ -91,37 +97,77 @@ const Products = () => {
 }
 
 const Wrapper = styled.div`
+
     display: flex;
-    width: 100%;
-    text-align: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-content: center;
+    padding: 20px;
 
     & h2{
         $random-text: 'suitable villa';
         background: linear-gradient(90deg, rgba(7,97,125,1) 12%, rgba(249,168,40,1) 38%, rgba(236,236,235,1) 82%);
-        font-size: 48px;
-        margin: 50px 0;
+        font-size: 2rem;
+        margin: 30px;
         text-transform: uppercase;
-        position: relative;
         font-family: 'Rancho', cursive;
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
     }
-`
+    & .subContainer{
+            display: flex;
+            
+    }
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
 
-`
 
-const SubContainer = styled.div`
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    @media ${device.mobileS} and (max-width: 768px) { 
+        justify-items: center;
+        max-width: 700px;
+
+        & .subContainer{
+            flex-direction: column;
+            align-items: center;
+        }
+        & .containerScoll{
+            overflow-x: hidden;
+            text-align: center;
+            margin: 30px;
+        }
+        & .prod{
+            align-self: center;
+        }
+
+        & .sideBar{
+            display: none;
+        }
+
+    }
+
+
+    @media ${device.tablet} {
+
+        & .containerScoll{
+            flex-wrap: wrap;
+            align-self: center;
+            justify-items: space-around;
+            
+        } 
+
+
+
+        & .subContainer{
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+        
+
+    }
+
 `
 
 

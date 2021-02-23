@@ -1,3 +1,5 @@
+
+
 const initialState = {
     companies: null,
     status: "loading",
@@ -16,10 +18,9 @@ switch (action.type) {
         return {
             ...state,
             status: 'idle',
-
-            Companies: {
-                data: action.data
-            }
+            companies: [
+                ...action.data
+            ]
             
         }
     }
@@ -30,6 +31,7 @@ switch (action.type) {
             status: 'error',
         }
     }
+
     default:{
         return state;
     }

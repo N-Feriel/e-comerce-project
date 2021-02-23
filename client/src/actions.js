@@ -22,17 +22,19 @@ export const receiveCompaniesData = (data) => ({
     data,
 });
 
+
 export const receiveCompaniesDataError = (error) => ({
     type: "RECEIVE_COMPAGNIES_DATA_ERROR",
     error,
 });
 
-export const addItemToCart = item => ({
+export const addItemToCart = (item, value) => ({
     type: "ADD_ITEM_TO_CART",
     item,
+    value,
 })
 
-export const removeItemToCart = item => ({
+export const removeItemToCart = (item) => ({
     type: "REMOVE_ITEM_TO_CART",
     item,
 })
@@ -48,3 +50,20 @@ export const clearCart = item => ({
     type: 'CLEAR_CART',
     item,
 })
+
+//Add research action 
+
+export const requestReseachtData = (data) => ({
+    type: "REQUEST_SEARCH_DATA",
+    data,
+});
+
+export const receiveResultsData = (data) => ({
+    type: "RECEIVE_RESULTS_DATA",
+    data,
+});
+
+export const receiveResultsDataError = (error) => ({
+    type: "RECEIVE_RESULTS_DATA_ERROR",
+    error,
+});

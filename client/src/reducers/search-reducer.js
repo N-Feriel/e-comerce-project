@@ -1,32 +1,31 @@
-import {produce} from'immer';
-
 const initialState = {
-    products: null,
-    companyProducts: null,
+    searchTerm: '',
+    results: null,
     status: "loading",
     error: null,
 };
 
 
-export default function productReducer(state = initialState, action) {
+export default function searchReducer(state = initialState, action) {
 switch (action.type) {
-    case "REQUEST_PRODUCTS_DATA": {
+    case "REQUEST_SEARCH_DATA": {
         return {
             ...state,
+            searchTerm: action.data,
             status: 'loading'
         }
     }
-    case "RECEIVE_PRODUCTS_DATA":{
+    case "RECEIVE_RESULTS_DATA":{
         return {
             ...state,
             status: 'idle',
-            products: [
+            results: [
                 ...action.data
             ]
         }
     }
 
-    case "RECEIVE_PRODUCTS_DATA_ERROR": {
+    case "RECEIVE_RESULTS_DATA_ERROR": {
         return{
             ...state,
             status: 'error',
@@ -37,8 +36,6 @@ switch (action.type) {
         
         }
     }
-
-
     default:{
         return state;
     }

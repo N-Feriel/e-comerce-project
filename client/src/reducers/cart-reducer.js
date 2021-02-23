@@ -1,4 +1,5 @@
 import {produce} from'immer';
+//import { result } from 'lodash';
 
 
 const initialState = {};
@@ -7,15 +8,17 @@ export default function cartReducer(state = initialState, action) {
 
     console.log('action', action)
 
+
     switch (action.type) {
 
         case 'ADD_ITEM_TO_CART':{
+            const{item, value} = action
 
             return{
                 ...state,
-                [action.item._id]:{
+                [item._id]:{
                     ...action.item,
-                    quantity: 1,
+                    quantity: value
                 }
             }
         }
