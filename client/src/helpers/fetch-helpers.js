@@ -16,3 +16,20 @@ export function fetchProductsUpdate(item, quantity){
 
 }
 
+
+export function fetchGetProducts(){
+    return fetch('/products')
+    .then(res => res.json())
+}
+
+export function fetchGetProduct(item){
+
+    let productId = item._id;
+    
+    //console.log(item , productId)
+
+    return fetch(`/products/${productId}`)
+    .then(res => res.json())
+
+}
+

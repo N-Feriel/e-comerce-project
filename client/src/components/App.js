@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import GlobalStyles from '../GlobalStyles';
 import Header from './Header';
@@ -23,11 +23,14 @@ import CompanyPage from "./CompanyPage";
 
 import { themeVars } from "../GlobalStyles";
 import { flatMap } from 'lodash';
+import FormSuccess from './Form/FormSuccess';
 
 
 function App() {
 
   const {search, product} = useSelector((state) => state)
+
+  const [numInStock, setNumInStock] = useState(0);
   
   const dispatch = useDispatch();
 
@@ -58,7 +61,6 @@ function App() {
 
   }
 
-
   useEffect(() => {
     getProductsData()
     getCompagniesData()
@@ -81,7 +83,7 @@ function App() {
 
       <Main >
 
-        <div style={{zIndex: '1', margin: 'auto'}}>
+        <div style={{width: '100%',zIndex: '1'}}>
           
           <Switch>
           <Route exact path="/" >
@@ -92,24 +94,25 @@ function App() {
           </Route>
           <Route exact path="/companies" >
             <SideBar />
-            {/* <Company /> */}
+            <CompanyPage />
           </Route>
-
           <Route exact path="/payment" >
             <Payment />
           </Route>
 
           <Route exact path="/products/:productId" >
-            <ProductItemDetails />
+            <ProductItemDetails  numInStock={numInStock}  setNumInStock={setNumInStock}/>
           </Route>
           <Route exact path="/companies/:companyId" >
             <CompanyPage getProductsData={getProductsData}/>
           </Route> 
+          <Route exact path="/success" >
+            <FormSuccess />
+          </Route> 
         </Switch>
-
-
+        
         </div>
-        <Cart />
+        <Cart numInStock={numInStock}  setNumInStock={setNumInStock}/>
         
       </Main>
     </Auth0ProviderWithHistory>

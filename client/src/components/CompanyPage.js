@@ -7,6 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import ProductItem from './ProductItem';
 import {receiveProductstData} from "../actions";
 import {IoReturnUpBackOutline} from 'react-icons/io5';
+import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
+
+import Pagination from './Pagination';
+import {paginate} from "../helpers/pagination";
 
 function CompanyPage({getProductsData}) {
 
@@ -16,20 +21,30 @@ function CompanyPage({getProductsData}) {
 
     const {products, status} = useSelector(state=> state.product);
 
+    const [pageSize, setPageSize]= useState(6);
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+
+    
+
     const [company, setCompany] = useState({})
 
     const history = useHistory();
 
     const [companyStatus, setCompanyStatus]= useState('idle');
 
+    const handlePageChange =(page) =>{
+        setCurrentPage(page)
+    }
 
-    const getCompanyDetails = async(id) =>{
 
-        
+
+    const getCompanyDetails = async(companyId) =>{
         try{
             setCompanyStatus('loading')
 
-            const res = await fetch(`/companies/${id}`)
+            const res = await fetch(`/companies/${companyId}`)
             const json = await res.json()
 
             if(res.status == 200 && status){
@@ -49,7 +64,8 @@ function CompanyPage({getProductsData}) {
         if(!products){
             return []
         }else{
-            return products.filter(product => (product.companyId === companyId))
+
+            return products.filter(product => (product.companyId == companyId))
         }
     }
 
@@ -65,23 +81,25 @@ function CompanyPage({getProductsData}) {
     }
 
 
-    if(companyStatus === 'error'){
-        return ( <div>
-            ...Error
-        </div> )
-    }
     if(companyStatus === 'loading'){
-        return ( <div>
-            ...Waiting for data
-        </div> )
+        return <div>
+            <LoadingPage />
+        </div>
     }
+    
+    else if(companyStatus === 'error'){
+        return <div>
+            <ErrorPage />
+        </div>
+    }
+    
 
 
     if(companyStatus === 'idle' ){
 
-        const companyProducts= getCompanyProductsData(products)
+        const companyProducts= getCompanyProductsData(products);
+        let companyProductsPaginate = paginate(companyProducts, currentPage, pageSize);
 
-        console.log('compPd', companyProducts)
 
         return ( <Container>
 
@@ -91,13 +109,13 @@ function CompanyPage({getProductsData}) {
                     onClick={(ev)=> handleGoBackHome(ev)}
                 >
                     <IoReturnUpBackOutline /> Home </button>
-                < h3> Welcome to <em>{company.name} </em>page</h3>
+                < h3 style={{textAlign:'center'}}> Welcome to <em>{company.name} </em>page</h3>
 
                 {companyProducts.length > 0 && 
                 
                     <div className='listProducts'>
 
-                        {companyProducts.map(item =>(
+                        {companyProductsPaginate.map(item =>(
                             <ProductItem 
                                 key={item._id}
                                 item= {item}/>
@@ -105,6 +123,11 @@ function CompanyPage({getProductsData}) {
                 
                 }
 
+                <Pagination className='paginate'
+                    itemsCount= {companyProducts.length} 
+                    currentPage={currentPage}
+                    pageSize ={pageSize}
+                    onPageChange= {handlePageChange}/>
 
             </div>
         </Container>
@@ -116,10 +139,14 @@ function CompanyPage({getProductsData}) {
 const Container = styled.div`
 
     display: flex;
+    color: ${themeVars.darkBlue};
+    
+
+
 
     & .listProducts{
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         margin: 30px;

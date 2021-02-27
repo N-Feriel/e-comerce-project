@@ -16,10 +16,12 @@ import {addItemToCart,
 import CompanyProducts from './CompanyProducts';
 
 
-const ProductItemDetails = () => {
+const ProductItemDetails = ({numInStock, setNumInStock}) => {
 
     const {productId} = useParams()
     const [item, setItem] = useState({})
+
+    
 
     const history = useHistory();
     const {cart} =useSelector(state => state)
@@ -35,11 +37,10 @@ const ProductItemDetails = () => {
 
             const json = await res.json()
 
-            console.log('json', json)
-
             if(json.status == 200){
                 setStatus('idle')
                 setItem(json.data)
+                setNumInStock(json.data.numInStock)
             }else{
                 throw(json)
             }
@@ -49,9 +50,30 @@ const ProductItemDetails = () => {
         }
     }
 
+    console.log('cart', cart)
     const handleBackToStore =() =>{
         history.push('/products/')
     }
+
+    const handleAddToCart = (ev, item, qty)=>{
+        if(qty < item.numInStock )
+            ev.stopPropagation()
+            if(cart[productId]){
+                const itemToUpdate = cart[productId]
+                dispatch(updateQuantity(itemToUpdate, 'quantity', qty ))
+                setNumInStock(item.numInStock - qty)
+            
+                // handleFetch(itemToUpdate, qty)
+
+            } else{
+                console.log(qty, 'qty')
+                dispatch(addItemToCart(item, qty))
+                setNumInStock(item.numInStock - qty)
+
+                // handleFetch(item, qty)
+            }
+    }
+
 
     const handleFetch = (item, quantity ) =>{
 
@@ -59,6 +81,7 @@ const ProductItemDetails = () => {
         .then(json =>{
             //console.log(json, 'json')
             dispatch(receiveProductstData(json.data))
+            
         })
         .catch(error =>{
             console.log(error)
@@ -66,11 +89,12 @@ const ProductItemDetails = () => {
         })
     }
 
-    console.log('companyId prod', item.companyId)
+    // console.log('companyId prod', item.companyId)
 
 
     useEffect(() =>{
         getProductDetail(productId)
+
     }, [productId])
 
 
@@ -87,11 +111,13 @@ const ProductItemDetails = () => {
     if(status === 'idle'){
         return ( <Container>
 
-            <div style={{width:'100%', padding: '20px', display: 'flex'}}>
-                <img src= {item.imageSrc} alt='img product' />
-            </div>
+            <div className='subContainer'>
 
-            <div>
+                <div style={{width:'100%', padding: '20px', display: 'flex'}}>
+                    <img src= {item.imageSrc} alt='img product' />
+                </div>
+
+                <div style={{width:'100%', flexGrow:'3'}}>
 
                 <h2>
                     {item.name}
@@ -117,7 +143,7 @@ const ProductItemDetails = () => {
                     <>
                         <p>
 
-                        <strong>{item.numInStock}</strong> items in stock
+                        <strong>{numInStock}</strong> items in stock
                         </p>
 
 
@@ -125,20 +151,22 @@ const ProductItemDetails = () => {
                         <h4>Quantity</h4>
 
                         <div style={{display: 'flex', marginBottom: '20px'}}>
-                            <button  style={{color: `${themeVars.PolishedPineColor}`}} 
-                                    disabled={qty > item.numInStock}
-                                    onClick={()=> setQty(qty+1)}
-                                >
-                                < RiAddFill size='25px'/>
-                            </button> 
-                                
-                            <button style={{padding: '10px', margin: '0 10px', fontSize: '1.2rem'}}>{qty}</button>
 
                             <button style={{color: `${themeVars.middleRedColor}`,fontSize:'1em'}} 
                                     disabled={qty<=0}
                                     onClick={()=> setQty(qty-1)}>
                                     <RiSubtractFill size='25px' />
                             </button> 
+                                
+                            <button style={{padding: '10px', margin: '0 10px', fontSize: '1.2rem'}}>{qty}</button>
+
+                            <button  style={{color: `${themeVars.PolishedPineColor}`}} 
+                                    disabled={qty > item.numInStock}
+                                    onClick={()=> setQty(qty+1)}
+                                >
+                                < RiAddFill size='25px'/>
+                            </button> 
+                        
                         </div>
 
                     </div>
@@ -147,20 +175,7 @@ const ProductItemDetails = () => {
 
                     <Button  className={item.numInStock > 0 ? "cart " : 'cart disabled'}
                             disabled={item.numInStock <= 0 || qty <= 0}
-                        onClick={(ev) => {
-                            if(qty > 0){
-                                ev.stopPropagation()
-                                if(cart[productId]){
-                                    const itemToUpdate = cart[productId]
-                                    dispatch(updateQuantity(itemToUpdate, 'quantity', itemToUpdate.quantity + qty ))
-                                    handleFetch(itemToUpdate, qty)
-    
-                                } else{
-                                    dispatch(addItemToCart(item, qty))
-                                    handleFetch(item, qty)
-                                }}
-                            }}
-                            >
+                        onClick={(ev) => handleAddToCart(ev, item, qty)}>
                         Add to<FaCartArrowDown size= '25px' /> 
                     </Button>
 
@@ -171,6 +186,7 @@ const ProductItemDetails = () => {
 
             </div>
 
+            </div>
 
             <div style={{borderTop: `solid 2px ${themeVars.green}`}}>
                 <CompanyProducts companyId ={item.companyId} 
@@ -205,8 +221,8 @@ const Container = styled.div`
     }
 
     & .details{
-
         display: flex;
+        width: 100%;
         align-content: flex-start;
         flex-direction: column;
         overflow-x: hidden;
@@ -218,7 +234,7 @@ const Container = styled.div`
     & p{ 
         /* align-self: center; */
         margin: 20px;
-        color: ${themeVars.PolishedPineColor};
+    
     }
 
 
@@ -234,12 +250,11 @@ const Container = styled.div`
     
     & h2{
         color: ${themeVars.darkBlue};
-        font-size: 1.8rem;
-        text-align: center;
+        font-size: 1.5rem;
     }
 
     & h4{
-        
+        color: ${themeVars.darkBlue};
         font-size: 1.2rem;
         
     }
@@ -267,15 +282,25 @@ const Container = styled.div`
         }
 
         & .details{
-
             border-top: none;
             border-bottom:  none;
-            width: 50%;
 
         }
 
+        & .subContainer{
+            display: flex;
+        }
+
+        & img{
+        width: 60%;
+        margin: auto;
+    }
+
         
     }
+
+
+
 
 `
 

@@ -5,18 +5,19 @@ import { themeVars } from "../GlobalStyles";
 import CompanyDetails from './CompanyDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductItem from './ProductItem';
+import Pagination from './Pagination';
 import {receiveProductstData} from "../actions";
 import {IoReturnUpBackOutline} from 'react-icons/io5';
-import logo from './logo192.png';
+
+
+import {paginate} from "../helpers/pagination";
+import logo from './watch.svg';
 import {device} from '../device';
 
 function CompanyProducts({getProductsData, companyId, productId}) {
 
     // const {companyId} = useParams();
 
-
-
-    console.log('compPage', companyId)
     const dispatch = useDispatch();
 
     const {products, status} = useSelector(state=> state.product);
@@ -24,6 +25,14 @@ function CompanyProducts({getProductsData, companyId, productId}) {
     const [company, setCompany] = useState({})
 
     const history = useHistory();
+    const [pageSize, setPageSize]= useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const handlePageChange =(page) =>{
+        setCurrentPage(page)
+    }
+
+
 
     const [companyStatus, setCompanyStatus]= useState('idle');
 
@@ -78,9 +87,9 @@ function CompanyProducts({getProductsData, companyId, productId}) {
 
     if(companyStatus === 'idle' ){
 
-        const companyProducts= getCompanyProductsData(products).filter(item => item._id !== productId)
+        const companyProducts= getCompanyProductsData(products).filter(item => item._id !== productId);
+        let companyProductsPaginate = paginate(companyProducts, currentPage, pageSize);
 
-        console.log('compPd', companyProducts)
 
         return ( <Container>
         
@@ -108,13 +117,20 @@ function CompanyProducts({getProductsData, companyId, productId}) {
                 
                     <div className='listProducts'>
 
-                        {companyProducts.map(item =>(
+                        {companyProductsPaginate.map(item =>(
                             <div style={{ scrollSnapAlign: 'center'}}>
                                 <ProductItem 
                                     key={item._id}
                                     item= {item}/>
                             </div>
                     ))}
+
+                    <Pagination className='paginate'
+                        itemsCount= {companyProducts.length} 
+                        currentPage={currentPage}
+                        pageSize ={pageSize}
+                        onPageChange= {handlePageChange}/>
+
                     </div>
                 
                 }

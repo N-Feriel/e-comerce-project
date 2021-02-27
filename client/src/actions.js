@@ -8,6 +8,13 @@ export const receiveProductstData = (data) => ({
     
 });
 
+export const updteProductData =(item, key, value) =>({
+    type: "UPDATE_PRODUCT_DATA",
+    item, 
+    key,
+    value
+})
+
 export const receiveProductsDataError = (error) => ({
     type: "RECEIVE_PRODUCTS_DATA_ERROR",
     error,
@@ -31,7 +38,7 @@ export const receiveCompaniesDataError = (error) => ({
 export const addItemToCart = (item, value) => ({
     type: "ADD_ITEM_TO_CART",
     item,
-    value,
+    value
 })
 
 export const removeItemToCart = (item) => ({

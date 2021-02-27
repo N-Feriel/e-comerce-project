@@ -7,6 +7,8 @@ import {paginate} from "../helpers/pagination";
 import { themeVars } from "../GlobalStyles";
 import SideBar from './SideBar';
 import {device} from '../device';
+import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
 
 const Products = () => {
 
@@ -31,18 +33,20 @@ const Products = () => {
     
     
     if(status === 'loading'){
-        return <div>
-            ...Loading
-        </div>
+        return <Wrapper>
+            <LoadingPage />
+        </Wrapper>
     }
     
     else if(status === 'error'){
         return <div>
-            ...error
+            <ErrorPage />
         </div>
     }
     
     else if(status === 'idle'){
+
+        
         
         products.map(item =>{
     

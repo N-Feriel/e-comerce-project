@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const cors = require("cors");
 
 const keyPublishable = process.env.PUB_KEY;
+const stripe = require('stripe')("sk_test_51IKV6pB7B1Sagu8UqM2FexpgXhGjtdQOFvjgyAwLkFL2iSyrPHH5fWR2uFsyoIMmZ4YRgSOxQwOTk0BufSCN7Wd200S9SJygyp");
 
 const {getProducts,
         getProduct, 
@@ -60,12 +61,23 @@ express()
     
   // res.json("index.pug", {client_secret: intent.client_secret}))
 
-  .post("/pay", createPayment)
+  .post("/payment", createPayment)
 
-  .get('/secret', async (req, res) => {
-    const intent = // ... Fetch or create the PaymentIntent
-    res.json({client_secret: intent.client_secret});
-  })
+  // const stripe = require('stripe')('sk_test_51IKV6pB7B1Sagu8UqM...ufSCN7Wd200S9SJygyp''sk_test_51IKV6pB7B1Sagu8UqM2FexpgXhGjtdQOFvjgyAwLkFL2iSyrPHH5fWR2uFsyoIMmZ4YRgSOxQwOTk0BufSCN7Wd200S9SJygyp');
+
+
+  // app.get('/secret', async (req, res) => {
+  //   const intent = await stripe.paymentIntents.create({
+  // amount: 1099,
+  // currency: 'cad',
+  // payment_method_types: ['card'],
+  // metadata: {
+  //   order_id: '6735',
+  // },
+  // });
+  //   res.json({client_secret: intent.client_secret})
+  // })
+
 
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

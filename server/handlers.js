@@ -96,7 +96,7 @@ const updateProduct = (req, res) => {
 
             res.status(200).json({
                 status: 200,
-                data: items
+                data: productName
                     
             })
         }
@@ -124,62 +124,22 @@ const createPayment = async(req, res) => {
     // const uuid  = require('uuid/v4')
     // const idempontencyKey = uuid();
 
-    
-    
+    console.log('req.bod', req.body)
     try{
+        const {amount} = req.body;
+        console.log('req', req.body)
 
-        let intent; 
-
-        if (req.body.payment_method_id) {
-            intent = await stripe.paymentIntents.create({
-                // amount: calculateOrderAmount(items),
-                payment_method: request.body.payment_method_id,
-                amount: 1099,
-                currency: 'cad',
-                confirmation_method: 'manual',
-                confirm: true
-            });
-        }else if (request.body.payment_intent_id){
-            intent = await stripe.paymentIntents.confirm(
-                request.body.payment_intent_id
-            );
-            
-
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: "cad",
+            payment_method_types: ['card'],
+        });
+            res.status(200).send(paymentIntent.client_secret);
+            console.log(res, 'res')
+        } catch (err) {
+            res.status(500).json({ statusCode: 500, message: err.message });
         }
-            // Send the response to the client
-            response.send(generateResponse(intent));
-        }catch(error){
-            return response.send({ error: error.message });
-
-        }
-
-        const generateResponse = (intent) => {
-
-            if (
-                intent.status === 'requires_action' &&
-                intent.next_action.type === 'use_stripe_sdk'
-            ) {
-                // Tell the client to handle the action
-                return {
-                    requires_action: true,
-                    payment_intent_client_secret: intent.client_secret
-                    };
-                } else if (intent.status === 'succeeded') {
-                    // The payment didn’t need any additional actions and completed!
-                    // Handle post-payment fulfillment
-                    return {
-                    success: true
-                    };
-                } else {
-                    // Invalid status
-                    return {
-                    error: 'Invalid PaymentIntent status'
-                    }
-                }
-        }
-    
 }
-
     
 
 

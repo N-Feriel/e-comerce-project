@@ -26,6 +26,13 @@ switch (action.type) {
         }
     }
 
+    case "UPDATE_PRODUCTS_DATA":{        
+        return produce(state, (draftState) =>{
+            const {item} = action;
+            draftState[item._id]= item;
+        })
+    }
+
     case "RECEIVE_PRODUCTS_DATA_ERROR": {
         return{
             ...state,

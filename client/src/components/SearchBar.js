@@ -103,7 +103,7 @@ function SearchBar() {
     }
 
     return (
-        <div style={{background: `${themeVars.darkBlue}`, padding:'30px 0 50px 0'}}>
+        <div style={{background: `${themeVars.darkBlue}`, padding:'30px 0 30px 0'}}>
             <Container>
             <input 
                 id='search'

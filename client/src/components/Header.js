@@ -62,7 +62,7 @@ const Header = () => {
                     
                 </li>
                 <li>
-                    <StyledLink>
+                    <StyledLink to="/">
                         Contact
                     </StyledLink>
                 </li>
@@ -85,7 +85,7 @@ const NavBar = styled.div `
     position: relative;
     background-color: ${themeVars.darkBlue};
     color: ${themeVars.lavender};
-    height: 80px;
+    height: 60px;
     z-index: 20;
 
     & button{

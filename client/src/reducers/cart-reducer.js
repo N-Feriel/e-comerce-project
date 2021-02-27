@@ -33,7 +33,7 @@ export default function cartReducer(state = initialState, action) {
 
             return produce(state, (draftState) =>{
                 const {item, key, value} = action;
-                draftState[item._id][key]= value;
+                draftState[item._id][key]+= value;
             })
 
         }

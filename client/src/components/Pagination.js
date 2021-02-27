@@ -8,10 +8,16 @@ const Pagination = ({itemsCount, pageSize,currentPage, onPageChange}) => {
     const [slidePages, setSlidePages] = useState([]);
 
     const pagesCount = Math.ceil(itemsCount/pageSize);
+
+    console.log('pageCount', pagesCount)
     
     const pages =_.range(1, pagesCount + 1);
+
+    const arr = pages.slice(currentPage-3, currentPage+ 2)
+    const arr2 = pages.slice(0, currentPage + 4)
     
     useEffect(() => {
+
         if(currentPage> 2){
             setSlidePages(arr)
         }
@@ -24,10 +30,7 @@ const Pagination = ({itemsCount, pageSize,currentPage, onPageChange}) => {
     if(pagesCount === 1) return null;
 
 
-
-
-    const arr = pages.slice(currentPage-3, currentPage+ 2)
-    const arr2 = pages.slice(0, currentPage + 4)
+    
 
     return ( 
         <Nav>

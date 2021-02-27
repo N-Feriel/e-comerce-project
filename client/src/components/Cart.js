@@ -4,12 +4,15 @@ import {useSelector, useDispatch} from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {getCartItemArray} from '../reducers/cart-reducer';
-import {fetchProductsUpdate} from "../helpers/fetch-helpers";
+import {fetchProductsUpdate, fetchGetProduct} from "../helpers/fetch-helpers";
 import {removeItemToCart,
     updateQuantity, 
     receiveProductstData,
+    updteProductData,
     receiveProductsDataError,
     clearCart} from '../actions';
+
+import {getTotalPrice} from "../helpers/pagination";
 
 
 import { themeVars } from "../GlobalStyles";
@@ -24,10 +27,11 @@ import{GiWatch} from 'react-icons/gi';
 
 import CheckoutForm from './CheckoutForm';
 
-const Cart = () => {
+const Cart = ({numInStock, setNumInStock}) => {
 
     const[isPayment ,setIsPayment] = useState(false);
     const [showCart, setShowCart] = useState(false);
+
     
     const arrItem = useSelector((state) => getCartItemArray(state.cart));
     const dispatch = useDispatch();
@@ -35,7 +39,7 @@ const Cart = () => {
     let itemInCart = arrItem.length > 0 ; 
     
     const history = useHistory()
-   
+
 
     const formattedPrice = (price) => {
         return new Intl.NumberFormat('en-US', {
@@ -48,100 +52,76 @@ const Cart = () => {
         setShowCart(!showCart)
     }
 
-    const handleRemove = (item, quantity) =>{
-        
+    const handleRemove = (item) =>{
+        console.log('item remove', item)
         dispatch(removeItemToCart(item));
-
-        // fetchProductsUpdate(item, quantity)
-        // .then(json =>{
-        //     console.log(json, 'json')
-        //     dispatch(receiveProductstData(json.data))
-        // } )
-        // .catch(error =>{
-        //     console.log(error)
-        //     dispatch(receiveProductsDataError(error))
-        // })
+        setNumInStock(numInStock + item.quantity)
     }
-
+    
+    
+    
     const handleUpdate = (item, qty) =>{
-
-        if(item.quantity + qty >= 0){
-
-            dispatch(updateQuantity(item, 'quantity', item.quantity + qty))
-
-            fetchProductsUpdate(item, qty)
-            .then(res => res.json())
-            .then(json =>{
-                dispatch(receiveProductstData(json.data))
-                console.log('json', json)
-
-            })
-            .catch(error =>{
-                console.log(error)
-                dispatch(receiveProductsDataError(error))
-            })
-        }
-        console.log(item, 'item update')
+            if(item.numInStock >= qty){
+                console.log('update', qty, item)
+                dispatch(updateQuantity(item, 'quantity', qty))
+                setNumInStock(numInStock - qty)
+                
+            }else {
+                dispatch(receiveProductsDataError("We don't have enough on the stock"))
+            }
+            
     }
 
-    const getTotalPrice = (arr) =>{
-        console.log('arr', arr)
-        return arr.reduce((result, item) => (item.price.substring(1)) * (item.quantity || 0), 0)
-    }
 
-    // const handleUpdateCart = (item, qty) =>{
-
-    //     fetch('/products')
-    //     .then(json => { 
-    //         console.log('json', json)
-    //         dispatch(receiveProductstData(json.data))
-    //     })
-    //     .catch(error =>{
-    //         console.log(error)
-    //         dispatch(receiveProductsDataError(error))
-    //     })
-
-    //     if(item.quantity + qty >= 0){
-
-    //         dispatch(updateQuantity(item, 'quantity', item.quantity + qty))
-    //     }
-
-    // }
 
     const handleClearCart = () =>{
 
         alert('Are you sure to clear your cart??')
         const itemsClear = [...arrItem]
         dispatch(clearCart(itemsClear))
-        // arrItem.forEach(item => {
-        //     fetchProductsUpdate(item, -item.quantity)
-        //     .then(json =>{
-        //         //console.log(json, 'json')
-        //         dispatch(receiveProductstData(json.data))
-        //     } )
-        //     .catch(error =>{
-        //         console.log(error)
-        //         dispatch(receiveProductsDataError(error))
-        //     })
-        // })
+        setShowCart(!showCart)
+        history.push('/products')
+
     }
 
+    const checkDataStock = async (arrItem)=>{
+
+        if(arrItem.length> 0){
+            arrItem.forEach(async(item) => {
+                try{
+                    const response = await fetchGetProduct(item)
+
+                    console.log('repsUpdate', response)
+    
+                    if(response.status == 400){
+                        throw(response.message)
+                        
+                    }else if(response.status == 200){
+
+                        if(response.data.numInStock >= item.quantity){
+                            setIsPayment(true)
+                            history.push('/payment')
+                        }else{
+                            throw('sorry You wait too long to buy this item')
+                        }
+                
+                    }
+                } catch(error){
+                    console.log(error)
+                    dispatch(receiveProductsDataError(error))
+                }
+            }
+                )
+                
+            }
+
+    }
+
+    
+
     const handlePay = ()=>{
-        setIsPayment(true)
-        history.push('/payment')
-
-        // arrItem.forEach(item => {
-        //     fetchProductsUpdate(item, -item.quantity)
-        //     .then(json =>{
-        //         //console.log(json, 'json')
-        //         dispatch(receiveProductstData(json.data))
-        //     } )
-        //     .catch(error =>{
-        //         console.log(error)
-        //         dispatch(receiveProductsDataError(error))
-        //     })
-        // })
-
+        setShowCart(!showCart)
+        checkDataStock(arrItem)
     }
 
     const handleShop = ()=>{
@@ -151,13 +131,13 @@ const Cart = () => {
 
     useEffect(() => {
         getTotalPrice(arrItem)
-    
+
     }, [arrItem])
 
     
 
     let totalPrice = getTotalPrice(arrItem);
-    console.log('total', totalPrice)
+    //console.log('total', totalPrice)
 
 
     return(
@@ -219,43 +199,47 @@ const Cart = () => {
                 
                         <SubDiv style={{ flexWrap: 'nowrap',
                             overflowY: 'scroll'}}>
-                            <div style={{alignSelf: 'top'}}>
-                                <Button style={{marginLeft:'auto', background:`${themeVars.middleRedColor}`}}
+                            <div style={{display:'flex',alignItems:'center', justifyContent:'space-between',
+                            borderBottom: `solid 1px ${themeVars.green}`,
+                        
+                        }}>
+                                <Button style={{background:`${themeVars.middleRedColor}`}}
                                     onClick={handleClearCart}>
                                         Clear
                                 </Button>
-                                <h2>
-                                    Shopping Cart
-                                </h2>
-                                <p>
-                                    Process to checkout as soon you're ready.
-                                </p>
+                                <div style={{flexGrow:'3'}}>
+                                    <h2>
+                                        Shopping Cart
+                                    </h2>
+                                    <p>
+                                        Process to checkout as soon you're ready.
+                                    </p>
+
+                                </div>
 
                             </div>
 
                             <div style={{margin:"auto", overflowY: 'scroll'}}>
                             {arrItem.map(item => {
 
-                                    // totalPrice = dispatch(getTotalPrice(item.quantity * item.price))
+                                    // totalPrice = dispatch(getTotalPrice(item.quantity * item.price))'
+                                    // console.log('item in the cart', item)
                                     
                                     return (
 
                                         <div key={item._id} 
                                             style={{display: 'flex',
-                                                justifyContent:'space-betwwen',
+                                                justifyContent:'space-between',
                                                 marginTop: '10px',
+                                                alignItems: 'center',
                                                 scrollSnapAlign: 'start'
-
                                         }}>
                                             <img src={item.imageSrc} alt='product img'/>
                                             <div style={{width: '50%'}}>
                                                 <h5 style={{marginTop: 0}}
                                                 >{item.name}</h5>
                                                 <p style={{margin: '20px 10px', textAlign:'initial'}}>{item.price} CAD</p>
-                                                <Button style={{background: 'gray', fontSize: '0.8em', margin: 'auto 15px' }} 
-                                                    onClick ={() =>handleRemove(item, -item.quantity)}>
-                                                    remove
-                                                </Button>
+                                                
                                             </div>
 
                                             <div style={{display: 'flex', 
@@ -264,35 +248,31 @@ const Cart = () => {
                                                         justifyContent: 'center',
                                                         }}>
                                                     
-                                                <button style={{color: `${themeVars.middleRedColor}`,fontSize:'1em'}} 
-                                                        disabled={item.quantity <=0}
-
-                                                        // onClick={(ev)=> handleUpdate(item, -1)}
-                                                        onClick={(ev)=> handleUpdate(item, +1)}
-                                                        
-                                                        >
-                                                        <RiSubtractFill />
-                                                </button> 
-                                                <button>{item.quantity}</button>
                 
                                                 <button  style={{color: `${themeVars.PolishedPineColor}`}} 
-                                                    disabled={item.quantity >=item.numInStock}
-
-                                                    // onClick={(ev)=> handleUpdate(item, +1)}
-                                                    onClick={(ev)=> handleUpdate(item, +1)}
-
-
+                                                        disabled={item.numInStock <= item.quantity }
+                                                        onClick={(ev)=> handleUpdate(item, +1)}
                                                     >
                                                     < RiAddFill />
                                                 </button> 
+                                                <button>{item.quantity}</button>
+                                                <button style={{color: `${themeVars.middleRedColor}`,fontSize:'1em'}} 
+                                                        disabled={item.quantity === 0}
+                                                        onClick={(ev)=> handleUpdate(item, -1)}        
+                                                        > 
+                                                        <RiSubtractFill />
+                                                </button> 
+                                            </div>
+                                            <div> 
+                                            <Button style={{background: 'gray', fontSize: '0.8em', margin: 'auto 15px' }} 
+                                                    onClick ={() =>handleRemove(item)}>
+                                                    remove
+                                                </Button>
                                             </div>
 
 
                                         </div>
                                     )
-                            
-                            
-                            
                                     })
                             }
 
@@ -309,7 +289,8 @@ const Cart = () => {
                                     onClick={handlePay} >
                                     Pay
                                 </Button>
-                                <Button style={{width:'100%', borderRadius: 0, margin: '10px 0'}}>
+                                <Button onClick={handleShop}
+                                    style={{width:'100%', borderRadius: 0, margin: '10px 0'}}>
                                     Continue To Shop
                                 </Button>
                             </div>
@@ -336,10 +317,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     background-color:  ${themeVars.lavender};
-    max-width: 500px;
+    max-width: 80vw;
     position: fixed;
     z-index: 30;
-    top: 205px;
+    top: 166px;
     right: 0;
 `
 
@@ -367,7 +348,6 @@ const SubDiv = styled.div`
     margin: auto;
     flex-direction: column;
     padding: 20px;
-    height: 80vh;
 
     & button{
         
@@ -377,7 +357,7 @@ const SubDiv = styled.div`
     }
 
     & img{
-        width: 150px;
+        width: 100px;
         height: fit-content;
         margin-left: 10px;
     }
@@ -386,11 +366,9 @@ const SubDiv = styled.div`
 
 
 const ContainCart = styled.div`
-    max-height: 90vh;
     text-align: center;
     align-self: center;
     margin: auto;
-
 
 `
 

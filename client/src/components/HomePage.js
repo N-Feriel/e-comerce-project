@@ -2,7 +2,9 @@ import React, {useEffect} from 'react';
 import Profile from './Profile';
 import Search from './Search';
 import {useDispatch, useSelector} from 'react-redux';
-import watchImg from './watch_img.jpg'
+import watchImg from './watch-png.png';
+import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
 
 import styled from 'styled-components';
 import { themeVars } from "../GlobalStyles";
@@ -31,14 +33,14 @@ const HomePage = () => {
 
 
     if(status === 'loading'){
-        return <div>
-            ...Loading
-        </div>
+        return <Wrapper>
+            <LoadingPage />
+        </Wrapper>
     }
     
     else if(status === 'error'){
         return <div>
-            ...error
+            <ErrorPage />
         </div>
     }
 
@@ -99,10 +101,12 @@ const Wrapper = styled.div`
 
     & .imagContainer{
         width: 100%;
-        height: 50vh;
+        height: 80vh;
         background-size: auto;
+        color: solid 2px ${themeVars.darkBlue};
 
         position: relative;
+        background: ${themeVars.middleRedColor};
         background-image: url(${watchImg});
         background-repeat: no-repeat;
         display: flex;
@@ -111,11 +115,13 @@ const Wrapper = styled.div`
 
         & button{
             padding: 10px 20px;
-            font-size: 1em;
+            font-size: 1.5em;
             border-radius: 4px;
             cursor: pointer;
             margin: auto;
-            background-color :  ${themeVars.lavender};
+            color: ${themeVars.middleRedColor};
+
+            background-color :  ${themeVars.darkBlue};
             border: solid 2px ${themeVars.darkBlue};
     
         }
@@ -123,7 +129,7 @@ const Wrapper = styled.div`
 
     & .animateText{
         z-index: 4;
-        color: ${themeVars.middleRedColor};
+        color: ${themeVars.lavender};
         animation: ${translate} 4s linear;
         margin: auto;
     } 

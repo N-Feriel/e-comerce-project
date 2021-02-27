@@ -156,8 +156,6 @@ const Wrapper = styled.div`
         justify-content: space-between;
         color: ${themeVars.lavender}; 
         border-radius: 5px;
-
-        
     }
 
     &:hover > .divDetails{

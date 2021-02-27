@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useHistory , Link} from "react-router-dom";
 
 import { FiExternalLink } from 'react-icons/fi';
-import logo from './logo192.png'
+import logo from './watch.svg'
 
 import { themeVars } from "../GlobalStyles";
 

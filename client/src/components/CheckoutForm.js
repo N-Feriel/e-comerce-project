@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import FormField from './FormField';
+import FormField from './Form/FormField';
 import {
     CardElement,
     useStripe,
@@ -124,47 +124,6 @@ function CheckoutForm  ({ totalPrice, buyProducts }) {
 
     return (
         <form onSubmit={handleSubmit} style={{width: "50%", margin: 'auto'}}>
-            <div>
-                <FormField 
-                    name="name"
-                    label="name"
-                    type="text"
-                    placeholder="Name"
-                    required
-                />
-
-                <FormField 
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="exemple@test.com"
-                    required
-                />
-
-                <FormField 
-                    name="address"
-                    label="Address"
-                    type="text"
-                    placeholder="123 exemple st. suite 234 "
-                    required
-                />
-
-                <FormField 
-                    name="city"
-                    label="City"
-                    type="text"
-                    placeholder="Montreal"
-                    required
-                />
-
-                <FormField 
-                    name="zip"
-                    label="Zip"
-                    type="text"
-                    placeholder="ABC 123"
-                    required
-                />
-            </div>
 
             <CardElementContainer>
                 <CardElement 
